@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://cjlxgs81d4e4u"]
+[gd_scene load_steps=4 format=3 uid="uid://cjlxgs81d4e4u"]
 
-[node name="Grid" type="Node2D"]
+[ext_resource type="Script" path="res://grid.gd" id="1_8yeg8"]
+[ext_resource type="PackedScene" uid="uid://li6s4rjk285a" path="res://grid_items/tomato_grid_item.tscn" id="3_m2edp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50jh0"]
+size = Vector2(768, 768)
+
+[node name="Grid" type="Area2D"]
+script = ExtResource("1_8yeg8")
+
+[node name="Boundary" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_50jh0")
+
+[node name="TomatoGridItem" parent="." instance=ExtResource("3_m2edp")]
+position = Vector2(64, 0)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="grid_item_touched" from="TomatoGridItem" to="." method="_on_tomato_grid_item_grid_item_touched"]

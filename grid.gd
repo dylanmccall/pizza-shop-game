@@ -1,4 +1,4 @@
-extends TileMap
+extends Node2D
 
 @export var tile_size:int = 64
 
@@ -7,17 +7,39 @@ extends TileMap
 # Implement drag & drop tile movement.
 # 
 
-func _process(delta):
-	process_input()
+var selected_grid_item:GridItem = null
 
-func process_input():
-	if Input.is_action_just_pressed("touch"):
-		var mouse_position = get_local_mouse_position()
-		var start_map = local_to_map(mouse_position)
-	elif Input.is_action_pressed("touch"):
-		var mouse_position = get_local_mouse_position()
-		# TODO: Offset the tile, indicating the direction it will move
-		# TODO: After some threshold, move the tile if it is allowed
-	elif Input.is_action_just_released("touch"):
-		var mouse_position = get_local_mouse_position()
-		var end_map = local_to_map(mouse_position)
+func _ready():
+	pass
+
+func _on_input_event(viewport, event, shape_idx):
+	if not selected_grid_item:
+		return
+
+	if event.is_action_released("touch"):
+		print("Trigger movement: ", selected_grid_item)
+		deselect_grid_item()
+		pass
+	elif event is InputEventMouseMotion:
+		print("Hint movement: ", selected_grid_item)
+		pass
+		
+	get_viewport().set_input_as_handled()
+
+func _on_tomato_grid_item_grid_item_touched(source):
+	print("_on_tomato_grid_item_grid_item_touched: ", source)
+	select_grid_item(source)
+
+func select_grid_item(grid_item:GridItem):
+	if selected_grid_item == grid_item:
+		return
+	elif selected_grid_item:
+		selected_grid_item.is_selected = false
+
+	if grid_item:
+		grid_item.is_selected = true
+
+	selected_grid_item = grid_item
+
+func deselect_grid_item():
+	select_grid_item(null)
