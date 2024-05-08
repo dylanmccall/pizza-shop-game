@@ -1,6 +1,6 @@
 class_name GridItem
 
-extends Node2D
+extends StaticBody2D
 
 @export var is_selected:bool = false:
 		set = _set_is_selected
@@ -12,7 +12,7 @@ func _set_is_selected(value:bool):
 	$SelectionSprite.visible = value
 	queue_redraw()
 
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if not event.is_action("touch"):
 		return
 

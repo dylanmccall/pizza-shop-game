@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgt5r"]
 size = Vector2(64, 64)
 
-[node name="GridItem" type="Area2D"]
+[node name="GridItem" type="StaticBody2D"]
+input_pickable = true
 script = ExtResource("1_bqh1u")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -18,16 +19,5 @@ texture = ExtResource("2_rxsmf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fgt5r")
-
-[node name="RayCast2D_Up" type="RayCast2D" parent="CollisionShape2D"]
-rotation = -3.14159
-
-[node name="RayCast2D_Right" type="RayCast2D" parent="CollisionShape2D"]
-rotation = -1.5708
-
-[node name="RayCast2D_Down" type="RayCast2D" parent="CollisionShape2D"]
-
-[node name="RayCast2D_Left" type="RayCast2D" parent="CollisionShape2D"]
-rotation = 1.5708
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
