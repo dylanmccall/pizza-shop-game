@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://li6s4rjk285a"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_s6rrb"]
+[ext_resource type="Texture2D" uid="uid://v0545j5wqelg" path="res://art/tomato.pxo" id="2_nf48q"]
+
+[node name="TomatoGridItem" instance=ExtResource("1_s6rrb")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_nf48q")

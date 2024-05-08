@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://brvf1c2uvbi4i"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_45m2y"]
+[ext_resource type="Texture2D" uid="uid://x1a7gn3ecw01" path="res://art/bocconcini.pxo" id="2_cexc0"]
+
+[node name="BocconciniGridItem" instance=ExtResource("1_45m2y")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_cexc0")
