@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b41oo5cvoajty"]
+[gd_scene load_steps=4 format=3 uid="uid://b41oo5cvoajty"]
 
 [ext_resource type="Script" path="res://grid_item.gd" id="1_bqh1u"]
+[ext_resource type="Texture2D" uid="uid://jslojo5oekrt" path="res://art/selection.pxo" id="2_rxsmf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgt5r"]
 size = Vector2(64, 64)
@@ -9,6 +10,11 @@ size = Vector2(64, 64)
 script = ExtResource("1_bqh1u")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="SelectionSprite" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.494118)
+texture = ExtResource("2_rxsmf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fgt5r")
