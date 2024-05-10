@@ -50,3 +50,10 @@ static func get_random_order() -> Array[Type]:
 		if r * w >= 0.5:
 			order.append(v)
 	return order
+
+
+static func get_type_image(type: Type) -> Image:
+	var type_name = get_type_name(type).to_lower()
+	var image_path = "res://art/toppings/%s.png" % type_name
+	var image = Image.load_from_file(image_path)
+	return image
