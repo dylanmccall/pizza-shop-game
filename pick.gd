@@ -34,7 +34,7 @@ func _ready():
 	reset()
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("new"):
 		reset_pizza()
 
@@ -42,12 +42,13 @@ func _process(delta):
 func _on_topping_picked(topping):
 	pizza.add_topping(topping)
 	if pizza.toppings == order:
-		status_label.text = "READY!"
+		status_label.text = "LOOKS GOOD, DUDE!"
 		print("You win!")
 		await get_tree().create_timer(1).timeout
 		reset()
 	elif pizza.toppings & ~order:
-		status_label.text = "WRONG!"
+		var topping_name = Toppings.get_type_name(topping)
+		status_label.text = "BRO, I DIDN'T ORDER %s!" % topping_name
 
 
 func _on_new_pizza_pressed():
