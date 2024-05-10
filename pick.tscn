@@ -38,10 +38,10 @@ offset_bottom = 300.0
 
 [node name="Status" type="Label" parent="."]
 offset_left = 100.0
-offset_top = 13.0
-offset_right = 238.0
-offset_bottom = 68.0
-theme_override_font_sizes/font_size = 40
+offset_top = 20.0
+offset_right = 183.0
+offset_bottom = 54.0
+theme_override_font_sizes/font_size = 24
 text = "READY!"
 
 [connection signal="picked" from="PanelContainer/ToppingsBin" to="." method="_on_topping_picked"]
