@@ -8,12 +8,12 @@
 script = ExtResource("1_yqc7d")
 
 [node name="Pizza2" parent="." instance=ExtResource("1_nru0q")]
-position = Vector2(37, 38)
+position = Vector2(-100, 40)
 
 [node name="ToppingsBin" parent="." instance=ExtResource("2_bf6jj")]
-offset_left = 5.0
-offset_top = 81.0
-offset_right = 45.0
-offset_bottom = 121.0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 548.0
+offset_bottom = 144.0
 
 [connection signal="picked" from="ToppingsBin" to="." method="_on_topping_picked"]

@@ -40,15 +40,15 @@ static func get_type_zorder(type: Type) -> int:
 	return 2
 
 
-# Generate a random order. An array of topping types is returned.
+# Generate a random order. An bitfield of topping types is returned.
 # Each type is weighted by get_type_weight().
-static func get_random_order() -> Array[Type]:
-	var order: Array[Type] = []
+static func get_random_order() -> int:
+	var order: int = 0
 	for v in Type.values():
 		var r = randf_range(0.0, 1.0)
 		var w = get_type_weight(v)
 		if r * w >= 0.5:
-			order.append(v)
+			order |= (1 << v)
 	return order
 
 
