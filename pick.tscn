@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://ewr512j7nmx8"]
+[gd_scene load_steps=5 format=3 uid="uid://ewr512j7nmx8"]
 
 [ext_resource type="PackedScene" uid="uid://cdd0hgtoulusu" path="res://pizza_2.tscn" id="1_nru0q"]
 [ext_resource type="Script" path="res://pick.gd" id="1_yqc7d"]
 [ext_resource type="PackedScene" uid="uid://bhhb5id3ylhke" path="res://toppings_bin.tscn" id="2_bf6jj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skq51"]
+bg_color = Color(0.86683, 0.86683, 0.866829, 1)
 
 [node name="Pick" type="Node2D"]
 script = ExtResource("1_yqc7d")
@@ -10,10 +13,14 @@ script = ExtResource("1_yqc7d")
 [node name="Pizza2" parent="." instance=ExtResource("1_nru0q")]
 position = Vector2(-100, 40)
 
-[node name="ToppingsBin" parent="." instance=ExtResource("2_bf6jj")]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 8.0
 offset_top = 80.0
-offset_right = 548.0
-offset_bottom = 144.0
+offset_right = 575.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_skq51")
 
-[connection signal="picked" from="ToppingsBin" to="." method="_on_topping_picked"]
+[node name="ToppingsBin" parent="PanelContainer" instance=ExtResource("2_bf6jj")]
+layout_mode = 2
+
+[connection signal="picked" from="PanelContainer/ToppingsBin" to="." method="_on_topping_picked"]
