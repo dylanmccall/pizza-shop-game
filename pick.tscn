@@ -23,6 +23,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_skq51")
 [node name="ToppingsBin" parent="PanelContainer" instance=ExtResource("2_bf6jj")]
 layout_mode = 2
 
+[node name="NewPizza" type="Button" parent="."]
+offset_left = 150.0
+offset_top = 200.0
+offset_right = 236.0
+offset_bottom = 231.0
+text = "New Pizza"
+
 [node name="Order" type="Label" parent="."]
 offset_left = 8.0
 offset_top = 200.0
@@ -38,3 +45,4 @@ theme_override_font_sizes/font_size = 40
 text = "READY!"
 
 [connection signal="picked" from="PanelContainer/ToppingsBin" to="." method="_on_topping_picked"]
+[connection signal="pressed" from="NewPizza" to="." method="_on_new_pizza_pressed"]

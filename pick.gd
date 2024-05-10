@@ -48,3 +48,7 @@ func _on_topping_picked(topping):
 		reset()
 	elif pizza.toppings & ~order:
 		status_label.text = "WRONG!"
+
+
+func _on_new_pizza_pressed():
+	reset_pizza()
