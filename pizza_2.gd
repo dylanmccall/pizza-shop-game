@@ -7,8 +7,15 @@ var toppings: int = 0
 var toppings_map: Dictionary = {}
 
 
-func _ready():
+func reset():
 	position.x = start_x
+	toppings = 0
+	for node in $Crust.get_children():
+		node.visible = false
+
+
+func _ready():
+	reset()
 	for index in $Crust.get_child_count():
 		var node = $Crust.get_child(index)
 		toppings_map[node.topping] = index
