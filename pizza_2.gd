@@ -2,7 +2,7 @@ extends Area2D
 
 @export var velocity: int = 200
 @export var start_x: int = -100
-@export var stop_x: int = 40
+@export var stop_x: int = 50
 var toppings: int = 0
 var toppings_map: Dictionary = {}
 

@@ -14,10 +14,15 @@
 [node name="ToppingsBin" type="MarginContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 script = ExtResource("1_jixad")
 
 [node name="Bin" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 5
 
 [node name="Sauce" parent="Bin" instance=ExtResource("2_mw2xj")]
 layout_mode = 2
