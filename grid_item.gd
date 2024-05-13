@@ -1,5 +1,4 @@
 class_name GridItem
-
 extends StaticBody2D
 
 @export var is_selected:bool = false:
