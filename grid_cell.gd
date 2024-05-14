@@ -8,6 +8,9 @@ signal grid_cell_pressed(source)
 signal grid_cell_hovered(source)
 signal grid_cell_unpressed(source)
 
+func _ready():
+	connect("input_event", self._on_input_event)
+
 func _set_is_selected(value:bool):
 	is_selected = value
 	$SelectionSprite.visible = value

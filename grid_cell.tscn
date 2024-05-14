@@ -23,5 +23,3 @@ texture = ExtResource("2_l3y2n")
 shape = SubResource("RectangleShape2D_fgt5r")
 
 [node name="Container" type="Node2D" parent="."]
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
