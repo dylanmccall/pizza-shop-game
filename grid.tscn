@@ -6,3 +6,4 @@
 script = ExtResource("1_8yeg8")
 
 [node name="GridCells" type="Node2D" parent="."]
+metadata/_edit_lock_ = true

@@ -2,10 +2,12 @@
 class_name Grid
 extends Node2D
 
-const TILE_SIZE:Vector2 = Vector2(64, 64)
+const TILE_SIZE:Vector2i = Vector2i(64, 64)
 
-@export var GRID_SIZE:Vector2 = Vector2(9, 9):
+@export var GRID_SIZE:Vector2i = Vector2i(9, 9):
 	set = _set_grid_size
+
+signal grid_changed(source:Grid)
 
 var grid_cell_scene:Resource = load("res://grid_cell.tscn")
 
@@ -17,7 +19,7 @@ var selected_grid_cell:GridCell = null
 func _ready():
 	update_grid_cells()
 
-func _set_grid_size(value:Vector2):
+func _set_grid_size(value:Vector2i):
 	GRID_SIZE = value
 	update_grid_cells()
 
@@ -56,7 +58,7 @@ func update_grid_cells():
 		node.queue_free()
 
 	# This looks better in the editor if we arrange cells around a center point.
-	var center = (GRID_SIZE - Vector2.ONE) / 2
+	var center = (GRID_SIZE - Vector2i.ONE) / 2
 
 	for index in range(0, GRID_SIZE.x * GRID_SIZE.y):
 		var grid_coordinate = get_coordinate_from_index(index)
@@ -75,15 +77,18 @@ func update_grid_cells():
 		get_grid_cell_from_index(6).put_grid_item(tomato_scene.instantiate())
 		get_grid_cell_from_index(9).put_grid_item(cheese_scene.instantiate())
 
-func get_coordinate_from_index(index:int) -> Vector2:
+func get_coordinate_from_index(index:int) -> Vector2i:
+	var index_x = index % GRID_SIZE.x
 	@warning_ignore("integer_division")
-	var index_x = index % int(GRID_SIZE.x)
-	var index_y = index / int(GRID_SIZE.x)
-	return Vector2(index_x, index_y)
+	var index_y = index / GRID_SIZE.x
+	return Vector2i(index_x, index_y)
 
-func get_coordinate_from_grid_cell(grid_cell:GridCell) -> Vector2:
+func get_coordinate_from_grid_cell(grid_cell:GridCell) -> Vector2i:
 	var index = grid_cell.get_index()
 	return get_coordinate_from_index(index)
+
+func get_index_from_coordinate(coordinate:Vector2i) -> int:
+	return coordinate.x + (coordinate.y * GRID_SIZE.x)
 
 func get_grid_cell_from_index(index:int) -> GridCell:
 	return $GridCells.get_child(index)
