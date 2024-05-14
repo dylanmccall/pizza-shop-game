@@ -1,16 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjlxgs81d4e4u"]
+[gd_scene load_steps=2 format=3 uid="uid://cjlxgs81d4e4u"]
 
 [ext_resource type="Script" path="res://grid.gd" id="1_8yeg8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_50jh0"]
-size = Vector2(768, 768)
-
-[node name="Grid" type="Area2D"]
+[node name="Grid" type="Node2D"]
 script = ExtResource("1_8yeg8")
-
-[node name="Boundary" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_50jh0")
 
 [node name="GridCells" type="Node2D" parent="."]
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
