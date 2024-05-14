@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=3 uid="uid://bhhb5id3ylhke"]
+
+[ext_resource type="Script" path="res://toppings_bin.gd" id="1_jixad"]
+[ext_resource type="PackedScene" uid="uid://dim7w82wl0u1o" path="res://bin_topping.tscn" id="2_mw2xj"]
+[ext_resource type="Texture2D" uid="uid://cyjq3an7a3lkm" path="res://art/toppings/sauce.pxo" id="3_gkw4p"]
+[ext_resource type="Texture2D" uid="uid://cjs7asc6sg3v7" path="res://art/toppings/cheese.pxo" id="4_mbjs5"]
+[ext_resource type="Texture2D" uid="uid://bhkcrx25qpmm5" path="res://art/toppings/sausage.pxo" id="5_btest"]
+[ext_resource type="Texture2D" uid="uid://cyt6ac0biou64" path="res://art/toppings/pepperoni.pxo" id="6_wmhkc"]
+[ext_resource type="Texture2D" uid="uid://dio6u3wbp63fg" path="res://art/toppings/green_pepper.pxo" id="7_o1q1u"]
+[ext_resource type="Texture2D" uid="uid://be6f8a68g1iv4" path="res://art/toppings/onion.pxo" id="8_si0jn"]
+[ext_resource type="Texture2D" uid="uid://bk21abu1p0t7m" path="res://art/toppings/olive.pxo" id="9_j46bd"]
+[ext_resource type="Texture2D" uid="uid://teu0dt8bsypq" path="res://art/toppings/tomato.pxo" id="10_em08n"]
+
+[node name="ToppingsBin" type="MarginContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_jixad")
+
+[node name="Bin" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Sauce" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("3_gkw4p")
+
+[node name="Cheese" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("4_mbjs5")
+topping = 1
+
+[node name="Sausage" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("5_btest")
+topping = 2
+
+[node name="Pepperoni" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("6_wmhkc")
+topping = 3
+
+[node name="GreenPepper" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("7_o1q1u")
+topping = 4
+
+[node name="Onion" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("8_si0jn")
+topping = 5
+
+[node name="Olive" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("9_j46bd")
+topping = 6
+
+[node name="Tomato" parent="Bin" instance=ExtResource("2_mw2xj")]
+layout_mode = 2
+texture_normal = ExtResource("10_em08n")
+topping = 7

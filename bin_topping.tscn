@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dim7w82wl0u1o"]
+
+[ext_resource type="Script" path="res://bin_topping.gd" id="1_x6agu"]
+
+[node name="BinTopping" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_x6agu")
