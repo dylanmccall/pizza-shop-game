@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce4ff2mfpeitp"]
+[gd_scene load_steps=5 format=3 uid="uid://ce4ff2mfpeitp"]
 
 [ext_resource type="Script" path="res://grid_cell.gd" id="1_s4sap"]
+[ext_resource type="Texture2D" uid="uid://b3xj4ls2wqj7y" path="res://art/cell.pxo" id="2_4vmw7"]
 [ext_resource type="Texture2D" uid="uid://jslojo5oekrt" path="res://art/selection.pxo" id="2_l3y2n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgt5r"]
@@ -11,6 +12,7 @@ input_pickable = true
 script = ExtResource("1_s4sap")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_4vmw7")
 
 [node name="SelectionSprite" type="Sprite2D" parent="."]
 visible = false
