@@ -7,3 +7,4 @@
 [node name="Grid" parent="." instance=ExtResource("1_tw6y4")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(330, 257)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce4ff2mfpeitp"]
+
+[ext_resource type="Script" path="res://grid_cell.gd" id="1_s4sap"]
+[ext_resource type="Texture2D" uid="uid://jslojo5oekrt" path="res://art/selection.pxo" id="2_l3y2n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgt5r"]
+size = Vector2(64, 64)
+
+[node name="GridCell" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_s4sap")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="SelectionSprite" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.494118)
+texture = ExtResource("2_l3y2n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fgt5r")
+
+[node name="Container" type="Node2D" parent="."]
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

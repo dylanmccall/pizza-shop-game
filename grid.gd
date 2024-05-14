@@ -1,126 +1,81 @@
 class_name Grid
 extends Area2D
 
-# For simplicity, we will relate nodes to grid cells based on their position
-# in the scene. This would be more flexible if we create an array of grid cell
-# nodes where we move grid items between grid cells, but this approach is enough
-# to get started.
-
 @export var TILE_SIZE:Vector2 = Vector2(64, 64)
+@export var WIDTH:int = 8
+@export var HEIGHT:int = 8
 
-var grid_item_drag:GridItemDrag = null
+var grid_cell_scene:Resource = load("res://grid_cell.tscn")
+
+var cheese_scene:Resource = load("res://grid_items/cheese_grid_item.tscn")
+var tomato_scene:Resource = load("res://grid_items/tomato_grid_item.tscn")
+
+var selected_grid_cell:GridCell = null
 
 func _ready():
-	# TODO: Remove this once we are instantiating grid items properly
-	for node in self.get_children():
-		if node is GridItem:
-			node.connect("grid_item_touched", _on_tomato_grid_grid_item_touched)
+	for index in range(0, WIDTH * HEIGHT):
+		var grid_cell = grid_cell_scene.instantiate()
+		grid_cell.position = get_coordinate_from_index(index) * TILE_SIZE
+		grid_cell.connect("grid_cell_pressed", self._on_grid_cell_pressed)
+		grid_cell.connect("grid_cell_unpressed", self._on_grid_cell_unpressed)
+		$GridCells.add_child(grid_cell)
 
-func _physics_process(delta):
-	if grid_item_drag:
-		grid_item_drag.update_from_raycast()
+	get_grid_cell_from_index(1).put_grid_item(cheese_scene.instantiate())
+	get_grid_cell_from_index(2).put_grid_item(cheese_scene.instantiate())
+	get_grid_cell_from_index(3).put_grid_item(tomato_scene.instantiate())
+	get_grid_cell_from_index(5).put_grid_item(tomato_scene.instantiate())
+	get_grid_cell_from_index(6).put_grid_item(tomato_scene.instantiate())
+	get_grid_cell_from_index(9).put_grid_item(cheese_scene.instantiate())
 
-func _on_input_event(viewport, event, shape_idx):
-	if not grid_item_drag:
+func _on_grid_cell_pressed(grid_cell:GridCell):
+	if grid_cell == selected_grid_cell:
 		return
 
-	grid_item_drag.update_target(get_local_mouse_position())
-	
-	if not grid_item_drag.is_significant():
+	var selected_grid_item = selected_grid_cell.get_grid_item() if selected_grid_cell else null
+	var target_grid_item = grid_cell.get_grid_item() if grid_cell else null
+
+	if selected_grid_item && !target_grid_item:
+		print("Only if the target is empty, move the grid item from ", selected_grid_cell, " to ", grid_cell)
+		grid_cell.move_grid_item(selected_grid_item, true)
+		deselect_grid_cell()
+	elif target_grid_item:
+		select_grid_cell(grid_cell)
+
+func _on_grid_cell_unpressed(grid_cell:GridCell):
+	if grid_cell == selected_grid_cell:
 		return
 
-	if event.is_action_released("touch") or event.is_action_released("swap"):
-		grid_item_drag.apply_movements()
-		deselect_grid_item()
-		get_viewport().set_input_as_handled()
+	var selected_grid_item = selected_grid_cell.get_grid_item() if selected_grid_cell else null
+	var target_grid_item = grid_cell.get_grid_item() if grid_cell else null
 
-func _on_tomato_grid_grid_item_touched(source):
-	select_grid_item(source)
+	if selected_grid_item && target_grid_item:
+		selected_grid_cell.move_grid_item(target_grid_item, true)
+		grid_cell.move_grid_item(selected_grid_item, true)
+	elif selected_grid_item:
+		grid_cell.move_grid_item(selected_grid_item, true)
 
-func select_grid_item(grid_item:GridItem):
-	print("Select grid item", grid_item)
-	if grid_item_drag and not grid_item_drag.get_grid_item() == grid_item:
-		grid_item_drag.get_grid_item().is_selected = false
+	deselect_grid_cell()
+
+func get_coordinate_from_index(index:int) -> Vector2:
+	var index_x = index / WIDTH
+	var index_y = index % HEIGHT
+	return Vector2(index_x, index_y)
+
+func get_coordinate_from_grid_cell(grid_cell:GridCell) -> Vector2:
+	var index = grid_cell.get_index()
+	return get_coordinate_from_index(index)
+
+func get_grid_cell_from_index(index:int) -> GridCell:
+	return $GridCells.get_child(index)
+
+func select_grid_cell(grid_cell:GridCell):
+	if selected_grid_cell and grid_cell != selected_grid_cell:
+		selected_grid_cell.is_selected = false
+
+	if grid_cell:
+		grid_cell.is_selected = true
 	
-	if not grid_item:
-		grid_item_drag = null
-	else:
-		grid_item_drag = GridItemDrag.new(self, grid_item)
-		grid_item.is_selected = true
+	selected_grid_cell = grid_cell
 
-func deselect_grid_item():
-	select_grid_item(null)
-
-class GridItemDrag:
-	enum Status {UNKNOWN, BLOCKED, ALLOWED, ANIMATING}
-
-	var _grid:Grid
-	var _grid_item:GridItem
-	var _start:Vector2 = Vector2.INF
-	var _target:Vector2 = Vector2.INF
-	var _status:Status = Status.UNKNOWN
-	var _swap_node:Node2D = null
-
-	func _init(grid:Grid, grid_item:GridItem):
-		self._grid = grid
-		self._grid_item = grid_item
-		self._update_start()
-	
-	func get_grid_item():
-		return self._grid_item
-
-	func _update_start():
-		var start = self._grid_item.position.snapped(self._grid.TILE_SIZE)
-		if start != self._start:
-			self._start = start
-			self._status = Status.UNKNOWN
-	
-	func is_significant() -> bool:
-		return self._start != self._target
-
-	func update_target(target:Vector2):
-		target = target.snapped(self._grid.TILE_SIZE)
-		if target != self._target:
-			self._target = target
-			self._status = Status.UNKNOWN
-		self._update_start()
-
-	func update_from_raycast():
-		if self._status != Status.UNKNOWN:
-			return
-		
-		if self._target == Vector2.INF:
-			return
-
-		var space_state = self._grid.get_world_2d().direct_space_state
-		var query = PhysicsPointQueryParameters2D.new()
-		query.position = self._grid.to_global(self._target)
-		query.exclude = [self._grid_item.get_rid()]
-		var result = space_state.intersect_point(query, 1)
-		result = result[0] if len(result) > 0 else null
-
-		if not result:
-			self._status = Status.ALLOWED
-			self._swap_node = null
-		elif not result.collider is GridItem:
-			self._status = Status.BLOCKED
-			self._swap_node = null
-		else:
-			self._status = Status.ALLOWED
-			self._swap_node = result.collider
-
-	func apply_movements():
-		if self._status != Status.ALLOWED:
-			return
-
-		if self._status == Status.ANIMATING:
-			return
-
-		var tween = self._grid.create_tween()
-		tween.set_parallel(true)
-		tween.tween_property(self._grid_item, "position", self._target, 0.1)
-		if self._swap_node:
-			tween.tween_property(self._swap_node, "position", self._start, 0.1)
-		tween.set_ease(Tween.EASE_OUT)
-		
-		self._status = Status.UNKNOWN
+func deselect_grid_cell():
+	select_grid_cell(null)
