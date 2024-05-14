@@ -4,9 +4,9 @@ extends StaticBody2D
 @export var is_selected:bool = false:
 		set = _set_is_selected
 
-signal grid_cell_pressed(source)
-signal grid_cell_hovered(source)
-signal grid_cell_unpressed(source)
+signal grid_cell_pressed(source:GridCell)
+signal grid_cell_hovered(source:GridCell)
+signal grid_cell_unpressed(source:GridCell)
 
 func _ready():
 	connect("input_event", self._on_input_event)
