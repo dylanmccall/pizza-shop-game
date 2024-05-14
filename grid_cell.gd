@@ -30,7 +30,7 @@ func move_grid_item(grid_item:GridItem, animate:bool = false):
 		grid_item.position = Vector2.ZERO
 
 func get_grid_item() -> GridItem:
-	return $Container.get_child(0)
+	return $Container.get_child(0) if has_grid_item() else null
 
 func _on_input_event(_viewport, event, _shape_idx):
 	if event.is_action_pressed("touch"):
