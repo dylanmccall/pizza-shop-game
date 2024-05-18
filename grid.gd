@@ -4,8 +4,11 @@ extends Node2D
 
 const TILE_SIZE:Vector2i = Vector2i(64, 64)
 
+## The size of the grid in rows and columns.
 @export var GRID_SIZE:Vector2i = Vector2i(9, 9):
-	set = _set_grid_size
+	set(value):
+		GRID_SIZE = value
+		_update_grid_cells()
 
 signal grid_changed(source:Grid)
 
@@ -19,9 +22,6 @@ var selected_grid_cell:GridCell = null
 func _ready():
 	_update_grid_cells()
 
-func _set_grid_size(value:Vector2i):
-	GRID_SIZE = value
-	_update_grid_cells()
 
 func _on_grid_cell_pressed(grid_cell:GridCell):
 	if grid_cell == selected_grid_cell:
@@ -119,6 +119,12 @@ func get_columns() -> int:
 
 func get_rows() -> int:
 	return GRID_SIZE.y
+
+func get_width() -> int:
+	return GRID_SIZE.x * TILE_SIZE.x
+
+func get_height() -> int:
+	return GRID_SIZE.y * TILE_SIZE.y
 
 func get_grid_items_for_column(column:int) -> Array[GridItem]:
 	var result:Array[GridItem] = []

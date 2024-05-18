@@ -1,7 +1,7 @@
 @tool
 extends Area2D
 
-@export var selected_toppings: Toppings.Type = 0:
+@export var selected_toppings: Toppings.Type = Toppings.Type.NONE:
 	set(value):
 		selected_toppings = value
 		_update_visible_toppings()

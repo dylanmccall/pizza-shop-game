@@ -37,5 +37,5 @@ func _add_pizza_order(order_number: int) -> PizzaOrderIndicator:
 	return order
 
 
-func _on_grid_grid_changed(source: Grid):
+func _on_grid_grid_changed(_source: Grid):
 	pass
