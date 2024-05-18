@@ -7,25 +7,29 @@ enum Direction {
 	COLUMN
 }
 
+@export var grid:Grid = null
+
 @export var direction:Direction = Direction.ROW:
 	set(value):
 		direction = value
 		_update_layout()
+
 @export var index:int = 0:
 	set(value):
 		index = value
 		_update_layout()
 
-var grid: Grid
-
 func _ready():
-	grid = get_parent() as Grid
-	
-	connect("child_entered_tree", self._on_child_entered_tree)
+	var parent = get_parent()
+	while parent and not parent is Grid:
+		parent = parent.get_parent()
+	grid = parent as Grid
 
 	if not grid:
 		push_warning("A GridEdgePositionManager must be a child of a Grid node")
 		return
+
+	connect("child_entered_tree", self._on_child_entered_tree)
 
 	_update_layout()
 

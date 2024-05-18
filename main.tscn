@@ -1,82 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://d4fncm7n1h4js"]
+[gd_scene load_steps=3 format=3 uid="uid://d4fncm7n1h4js"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_troqv"]
 [ext_resource type="PackedScene" uid="uid://cjlxgs81d4e4u" path="res://grid.tscn" id="1_tw6y4"]
-[ext_resource type="Script" path="res://grid_edge_position_manager.gd" id="2_cgyal"]
-[ext_resource type="PackedScene" uid="uid://dpak46eca4cni" path="res://pizza.tscn" id="3_8scy6"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_troqv")
 
 [node name="Grid" parent="." instance=ExtResource("1_tw6y4")]
 
-[node name="GridEdgePositionManager1" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager1" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, -256)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager2" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 1
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager2" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, -192)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager3" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 2
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager3" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, -128)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager4" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 3
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager4" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, -64)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager5" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 4
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager5" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, 0)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager6" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 5
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager6" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, 64)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager7" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 6
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager7" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, 128)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager8" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 7
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager8" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, 192)
-grid = NodePath("../..")
-
-[node name="GridEdgePositionManager9" type="Node2D" parent="Grid"]
-script = ExtResource("2_cgyal")
-index = 8
-
-[node name="Pizza" parent="Grid/GridEdgePositionManager9" node_paths=PackedStringArray("grid") instance=ExtResource("3_8scy6")]
-position = Vector2(320, 256)
-grid = NodePath("../..")
-
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="grid_changed" from="Grid" to="." method="_on_grid_grid_changed"]
