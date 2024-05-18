@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ewr512j7nmx8"]
 
-[ext_resource type="PackedScene" uid="uid://cdd0hgtoulusu" path="res://pizza_2.tscn" id="1_nru0q"]
+[ext_resource type="PackedScene" uid="uid://dpak46eca4cni" path="res://pizza.tscn" id="1_nru0q"]
 [ext_resource type="Script" path="res://pick.gd" id="1_yqc7d"]
-[ext_resource type="PackedScene" uid="uid://bhhb5id3ylhke" path="res://toppings_bin.tscn" id="2_bf6jj"]
+[ext_resource type="PackedScene" uid="uid://c61p3qihlos0d" path="res://toppings_bin.tscn" id="2_bf6jj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skq51"]
 bg_color = Color(0.86683, 0.86683, 0.866829, 1)

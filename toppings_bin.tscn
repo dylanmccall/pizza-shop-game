@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhhb5id3ylhke"]
+[gd_scene load_steps=11 format=3 uid="uid://c61p3qihlos0d"]
 
 [ext_resource type="Script" path="res://toppings_bin.gd" id="1_jixad"]
 [ext_resource type="PackedScene" uid="uid://dim7w82wl0u1o" path="res://bin_topping.tscn" id="2_mw2xj"]

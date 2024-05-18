@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://pizza.gd" id="1_0l5bv"]
 [ext_resource type="Texture2D" uid="uid://c3mwe4f7fh6oo" path="res://art/crust.pxo" id="1_dlbq5"]
-[ext_resource type="PackedScene" path="res://applied_topping.tscn" id="3_uegdw"]
+[ext_resource type="PackedScene" uid="uid://06dee05lgr5r" path="res://applied_topping.tscn" id="3_uegdw"]
 [ext_resource type="Texture2D" uid="uid://cyjq3an7a3lkm" path="res://art/toppings/sauce.pxo" id="4_hvw6h"]
 [ext_resource type="Texture2D" uid="uid://cjs7asc6sg3v7" path="res://art/toppings/cheese.pxo" id="5_11r85"]
 [ext_resource type="Texture2D" uid="uid://bhkcrx25qpmm5" path="res://art/toppings/sausage.pxo" id="6_ax114"]
@@ -23,10 +23,11 @@ texture = ExtResource("1_dlbq5")
 
 [node name="Sauce" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("4_hvw6h")
+topping = 1
 
 [node name="Cheese" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("5_11r85")
-topping = 1
+topping = 4
 
 [node name="Sausage" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("6_ax114")
@@ -34,23 +35,23 @@ topping = 2
 
 [node name="Pepperoni" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("7_eqfk3")
-topping = 3
+topping = 8
 
 [node name="GreenPepper" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("7_ogfht")
-topping = 4
+topping = 16
 
 [node name="Onion" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("8_v1ruy")
-topping = 5
+topping = 32
 
 [node name="Olive" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("9_oqax7")
-topping = 6
+topping = 64
 
 [node name="Tomato" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("10_tum5s")
-topping = 7
+topping = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jqdy6")

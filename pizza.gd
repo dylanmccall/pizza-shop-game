@@ -1,27 +1,22 @@
+@tool
 extends Area2D
 
-var toppings: int = 0
+@export var selected_toppings: Toppings.Type = 0:
+	set(value):
+		selected_toppings = value
+		_update_visible_toppings()
+
 var toppings_map: Dictionary = {}
 
 
-func reset():
-	toppings = 0
-	for node in $Crust.get_children():
-		node.visible = false
-
-
 func _ready():
-	reset()
 	for index in $Crust.get_child_count():
 		var node = $Crust.get_child(index)
 		toppings_map[node.topping] = index
+	_update_visible_toppings()
 
 
-func add_topping(type: Toppings.Type) -> void:
-	if toppings & (1 << type):
-		return
-
-	print("Adding %s topping" % Toppings.get_type_name(type))
-	var node = $Crust.get_child(toppings_map[type])
-	node.visible = true
-	toppings |= (1 << type)
+func _update_visible_toppings():
+	for type in toppings_map:
+		var node = $Crust.get_child(toppings_map[type])
+		node.visible = selected_toppings & type

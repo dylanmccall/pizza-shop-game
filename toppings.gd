@@ -5,14 +5,15 @@ class_name Toppings
 # Topping types.
 # A named enum is just a Dictionary with a bit of syntatic sugar.
 enum Type {
-	SAUCE,
-	CHEESE,
-	SAUSAGE,
-	PEPPERONI,
-	GREEN_PEPPER,
-	ONION,
-	OLIVE,
-	TOMATO,
+	NONE = 0,
+	SAUCE = 1 << 0,
+	CHEESE = 1 << 1,
+	SAUSAGE = 1 << 2,
+	PEPPERONI = 1 << 3,
+	GREEN_PEPPER = 1 << 4,
+	ONION = 1 << 5,
+	OLIVE = 1 << 6,
+	TOMATO = 1 << 7,
 }
 
 
@@ -48,7 +49,7 @@ static func get_random_order() -> int:
 		var r = randf_range(0.0, 1.0)
 		var w = get_type_weight(v)
 		if r * w >= 0.5:
-			order |= (1 << v)
+			order |= v
 	return order
 
 
