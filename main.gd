@@ -20,8 +20,18 @@ func _refresh_pizza_orders():
 	pizza_orders = []
 	pizza_orders.resize(max_pizza_orders)
 
+	var needed_toppings = []
 	for order_number in range(max_pizza_orders):
-		pizza_orders[order_number] = _add_pizza_order(order_number)
+		var order = _add_pizza_order(order_number)
+		pizza_orders[order_number] = order
+		for type in Toppings.Type.values():
+			if order.toppings & type:
+				needed_toppings.append(type)
+
+	var grid_indices = range($Grid.get_rows() * $Grid.get_columns())
+	grid_indices.shuffle()
+	for i in range(needed_toppings.size()):
+		$Grid.set_grid_item_topping(grid_indices[i], needed_toppings[i])
 
 
 func _add_pizza_order(order_number: int) -> PizzaOrderIndicator:

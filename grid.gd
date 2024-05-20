@@ -78,26 +78,6 @@ func _update_grid_cells():
 			grid_cell.connect("grid_cell_unpressed", self._on_grid_cell_unpressed)
 		$GridCells.add_child(grid_cell)
 
-	if not Engine.is_editor_hint():
-		_get_grid_cell_from_index(1).put_grid_item(
-			topping_scenes[Toppings.Type.CHEESE].instantiate()
-		)
-		_get_grid_cell_from_index(2).put_grid_item(
-			topping_scenes[Toppings.Type.CHEESE].instantiate()
-		)
-		_get_grid_cell_from_index(3).put_grid_item(
-			topping_scenes[Toppings.Type.TOMATO].instantiate()
-		)
-		_get_grid_cell_from_index(5).put_grid_item(
-			topping_scenes[Toppings.Type.TOMATO].instantiate()
-		)
-		_get_grid_cell_from_index(6).put_grid_item(
-			topping_scenes[Toppings.Type.TOMATO].instantiate()
-		)
-		_get_grid_cell_from_index(9).put_grid_item(
-			topping_scenes[Toppings.Type.CHEESE].instantiate()
-		)
-
 func _get_coordinate_from_index(index:int) -> Vector2i:
 	var index_x = index % GRID_SIZE.x
 	@warning_ignore("integer_division")
@@ -157,3 +137,8 @@ func get_grid_items_for_row(row:int) -> Array[GridItem]:
 	for column in range(get_columns()):
 		result.append(_get_grid_item_from_coordinate(Vector2i(column, row)))
 	return result
+
+func set_grid_item_topping(index:int, type:Toppings.Type):
+	_get_grid_cell_from_index(index).put_grid_item(
+		topping_scenes[type].instantiate()
+	)
