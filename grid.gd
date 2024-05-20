@@ -14,8 +14,16 @@ signal grid_changed(source:Grid)
 
 var grid_cell_scene:Resource = load("res://grid_cell.tscn")
 
-var cheese_scene:Resource = load("res://grid_items/cheese_grid_item.tscn")
-var tomato_scene:Resource = load("res://grid_items/tomato_grid_item.tscn")
+var topping_scenes:Dictionary = {
+	Toppings.Type.SAUCE: load("res://grid_items/sauce_grid_item.tscn"),
+	Toppings.Type.CHEESE: load("res://grid_items/cheese_grid_item.tscn"),
+	Toppings.Type.SAUSAGE: load("res://grid_items/sausage_grid_item.tscn"),
+	Toppings.Type.PEPPERONI: load("res://grid_items/pepperoni_grid_item.tscn"),
+	Toppings.Type.GREEN_PEPPER: load("res://grid_items/green_pepper_grid_item.tscn"),
+	Toppings.Type.ONION: load("res://grid_items/onion_grid_item.tscn"),
+	Toppings.Type.OLIVE: load("res://grid_items/olive_grid_item.tscn"),
+	Toppings.Type.TOMATO: load("res://grid_items/tomato_grid_item.tscn"),
+}
 
 var selected_grid_cell:GridCell = null
 
@@ -71,12 +79,24 @@ func _update_grid_cells():
 		$GridCells.add_child(grid_cell)
 
 	if not Engine.is_editor_hint():
-		_get_grid_cell_from_index(1).put_grid_item(cheese_scene.instantiate())
-		_get_grid_cell_from_index(2).put_grid_item(cheese_scene.instantiate())
-		_get_grid_cell_from_index(3).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(5).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(6).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(9).put_grid_item(cheese_scene.instantiate())
+		_get_grid_cell_from_index(1).put_grid_item(
+			topping_scenes[Toppings.Type.CHEESE].instantiate()
+		)
+		_get_grid_cell_from_index(2).put_grid_item(
+			topping_scenes[Toppings.Type.CHEESE].instantiate()
+		)
+		_get_grid_cell_from_index(3).put_grid_item(
+			topping_scenes[Toppings.Type.TOMATO].instantiate()
+		)
+		_get_grid_cell_from_index(5).put_grid_item(
+			topping_scenes[Toppings.Type.TOMATO].instantiate()
+		)
+		_get_grid_cell_from_index(6).put_grid_item(
+			topping_scenes[Toppings.Type.TOMATO].instantiate()
+		)
+		_get_grid_cell_from_index(9).put_grid_item(
+			topping_scenes[Toppings.Type.CHEESE].instantiate()
+		)
 
 func _get_coordinate_from_index(index:int) -> Vector2i:
 	var index_x = index % GRID_SIZE.x
