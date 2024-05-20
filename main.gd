@@ -9,6 +9,7 @@ var pizza_orders: Array[PizzaOrderIndicator] = []
 
 func _ready():
 	_refresh_pizza_orders()
+	$UI.start(60)
 
 
 func _refresh_pizza_orders():
