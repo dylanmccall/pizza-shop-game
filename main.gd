@@ -16,7 +16,7 @@ func _refresh_pizza_orders():
 		$Grid.remove_child(order.indicator)
 		order.indicator.queue_free()
 
-	max_pizza_orders = $Grid.get_rows() + $Grid.get_columns()
+	max_pizza_orders = $Grid.get_rows() # + $Grid.get_columns()
 	pizza_orders = []
 	pizza_orders.resize(max_pizza_orders)
 
