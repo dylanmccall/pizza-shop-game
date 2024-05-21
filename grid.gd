@@ -10,6 +10,8 @@ const TILE_SIZE:Vector2i = Vector2i(64, 64)
 		GRID_SIZE = value
 		_update_grid_cells()
 
+var active:bool = false
+
 signal grid_changed(source:Grid)
 
 var grid_cell_scene:Resource = load("res://grid_cell.tscn")
@@ -37,6 +39,9 @@ func _ready():
 
 
 func _on_grid_cell_pressed(grid_cell:GridCell):
+	if not active:
+		return
+
 	if grid_cell == selected_grid_cell:
 		return
 
@@ -52,6 +57,9 @@ func _on_grid_cell_pressed(grid_cell:GridCell):
 		_select_grid_cell(grid_cell)
 
 func _on_grid_cell_unpressed(grid_cell:GridCell):
+	if not active:
+		return
+
 	if grid_cell == selected_grid_cell:
 		return
 
@@ -164,3 +172,7 @@ func get_grid_item_toppings_for_column(column:int) -> int:
 	for item in get_grid_items_for_row(column):
 		toppings |= get_grid_item_topping(item)
 	return toppings
+
+func clear_grid_cells():
+	for node in $GridCells.get_children():
+		node.clear_grid_items()

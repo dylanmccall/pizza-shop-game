@@ -7,15 +7,10 @@ var max_pizza_orders: int = 0
 var pizza_orders: Array[PizzaOrderIndicator] = []
 
 
-func _ready():
-	_refresh_pizza_orders()
-	$UI.start(60)
-
-
 func _refresh_pizza_orders():
 	for order in pizza_orders:
-		$Grid.remove_child(order.indicator)
-		order.indicator.queue_free()
+		$Grid.remove_child(order)
+		order.queue_free()
 
 	max_pizza_orders = $Grid.get_rows() # + $Grid.get_columns()
 	pizza_orders = []
@@ -48,5 +43,45 @@ func _add_pizza_order(order_number: int) -> PizzaOrderIndicator:
 	return order
 
 
+func _check_pizza_orders() -> bool:
+	for order_number in range(pizza_orders.size()):
+		var order = pizza_orders[order_number]
+		var applied_toppings:int
+		if order_number < $Grid.get_rows():
+			applied_toppings = $Grid.get_grid_item_toppings_for_row(order_number)
+		else:
+			applied_toppings = $Grid.get_grid_item_toppings_for_column(order_number - $Grid.get_rows())
+
+		if applied_toppings != order.toppings:
+			return false
+
+	return true
+
+
 func _on_grid_grid_changed(_source: Grid):
 	pass
+
+
+func _update_status():
+	$Grid.active = false
+	var matched:bool = _check_pizza_orders()
+	if matched:
+		$UI.set_message("LOOKS GOOD, DUDE!")
+	else:
+		$UI.set_message("BRO, THAT'S NOT WHAT I ORDERED!")
+
+
+func _on_ui_countdown_timeout():
+	_update_status()
+
+
+func _on_ui_ready_pressed():
+	_update_status()
+
+
+func _on_ui_start_pressed():
+	$UI.set_message("")
+	$Grid.clear_grid_cells()
+	_refresh_pizza_orders()
+	$Grid.active = true
+	$UI.start_countdown()

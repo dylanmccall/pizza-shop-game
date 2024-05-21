@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://ui.gd" id="1_bi1i6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qgv4"]
+content_margin_left = 10.0
+content_margin_right = 10.0
 bg_color = Color(0.368627, 0.666667, 0.494118, 1)
 border_width_left = 2
 border_width_top = 2
@@ -15,22 +17,23 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_k5e2p"]
-font_size = 32
+font_size = 24
 
-[node name="UI" type="Panel"]
+[node name="UI" type="PanelContainer"]
 custom_minimum_size = Vector2(64, 64)
-offset_bottom = 64.0
+offset_right = 140.0
+offset_bottom = 68.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_0qgv4")
 script = ExtResource("1_bi1i6")
 
 [node name="Box" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 0
-offset_right = 36.0
-offset_bottom = 45.0
+custom_minimum_size = Vector2(64, 100)
+layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="Countdown" type="Label" parent="Box"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_vertical = 1
 text = "60"
@@ -38,5 +41,28 @@ label_settings = SubResource("LabelSettings_k5e2p")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Start" type="Button" parent="Box"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Start"
+
+[node name="Ready" type="Button" parent="Box"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Ready!"
+
+[node name="Message" type="Label" parent="Box"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_k5e2p")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="pressed" from="Box/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Box/Ready" to="." method="_on_ready_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

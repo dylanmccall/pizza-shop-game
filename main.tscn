@@ -12,9 +12,12 @@ script = ExtResource("1_troqv")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="UI" parent="." instance=ExtResource("3_is2qe")]
-offset_left = 288.0
+offset_left = -240.0
 offset_top = 300.0
-offset_right = 352.0
-offset_bottom = 364.0
+offset_right = 241.0
+offset_bottom = 404.0
 
 [connection signal="grid_changed" from="Grid" to="." method="_on_grid_grid_changed"]
+[connection signal="countdown_timeout" from="UI" to="." method="_on_ui_countdown_timeout"]
+[connection signal="ready_pressed" from="UI" to="." method="_on_ui_ready_pressed"]
+[connection signal="start_pressed" from="UI" to="." method="_on_ui_start_pressed"]

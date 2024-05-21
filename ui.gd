@@ -1,19 +1,35 @@
-extends Panel
+extends PanelContainer
 
-@onready var label = $Box/Countdown
+@onready var countdown = $Box/Countdown
+@onready var message = $Box/Message
 @onready var timer = $Timer
-signal timeout
+@export var game_time: int = 60
 
-func start(time: int):
-	timer.start(time)
-	_update_label()
+signal start_pressed
+signal ready_pressed
+signal countdown_timeout
 
-func _update_label():
-	label.text = str(ceil(timer.time_left))
+func start_countdown():
+	timer.start(game_time)
+	timer.paused = false
+
+func set_message(msg:String):
+	message.text = msg
+
+func _update_countdown():
+	countdown.text = str(ceil(timer.time_left))
 
 func _process(_delta):
-	_update_label()
+	_update_countdown()
 
 func _on_timer_timeout():
-	print("It's all over now")
-	timeout.emit()
+	countdown_timeout.emit()
+
+func _on_start_pressed():
+	_update_countdown()
+	start_pressed.emit()
+
+
+func _on_ready_pressed():
+	timer.paused = true
+	ready_pressed.emit()
