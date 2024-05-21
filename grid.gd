@@ -25,9 +25,14 @@ var topping_scenes:Dictionary = {
 	Toppings.Type.TOMATO: load("res://grid_items/tomato_grid_item.tscn"),
 }
 
+var topping_scene_paths:Dictionary = {}
+
 var selected_grid_cell:GridCell = null
 
 func _ready():
+	for type in topping_scenes.keys():
+		var scene = topping_scenes[type]
+		topping_scene_paths[scene.resource_path] = type
 	_update_grid_cells()
 
 
@@ -142,3 +147,20 @@ func set_grid_item_topping(index:int, type:Toppings.Type):
 	_get_grid_cell_from_index(index).put_grid_item(
 		topping_scenes[type].instantiate()
 	)
+
+func get_grid_item_topping(item:GridItem) -> Toppings.Type:
+	if item == null:
+		return Toppings.Type.NONE
+	return topping_scene_paths.get(item.scene_file_path, Toppings.Type.NONE)
+
+func get_grid_item_toppings_for_row(row:int) -> int:
+	var toppings:int = 0
+	for item in get_grid_items_for_row(row):
+		toppings |= get_grid_item_topping(item)
+	return toppings
+
+func get_grid_item_toppings_for_column(column:int) -> int:
+	var toppings:int = 0
+	for item in get_grid_items_for_row(column):
+		toppings |= get_grid_item_topping(item)
+	return toppings
