@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://blr8bqqelbcoy"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_fhn3w"]
+[ext_resource type="Texture2D" uid="uid://cyt6ac0biou64" path="res://art/toppings/pepperoni.pxo" id="2_jyq1p"]
+
+[node name="PepperoniGridItem" instance=ExtResource("1_fhn3w")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_jyq1p")

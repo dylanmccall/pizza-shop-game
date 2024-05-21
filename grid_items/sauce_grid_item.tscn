@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cot1dy276w04v"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_cxpyi"]
+[ext_resource type="Texture2D" uid="uid://cyjq3an7a3lkm" path="res://art/toppings/sauce.pxo" id="2_svd1s"]
+
+[node name="SauceGridItem" instance=ExtResource("1_cxpyi")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_svd1s")

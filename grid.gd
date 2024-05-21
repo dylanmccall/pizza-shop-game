@@ -10,20 +10,38 @@ const TILE_SIZE:Vector2i = Vector2i(64, 64)
 		GRID_SIZE = value
 		_update_grid_cells()
 
+var active:bool = false
+
 signal grid_changed(source:Grid)
 
 var grid_cell_scene:Resource = load("res://grid_cell.tscn")
 
-var cheese_scene:Resource = load("res://grid_items/cheese_grid_item.tscn")
-var tomato_scene:Resource = load("res://grid_items/tomato_grid_item.tscn")
+var topping_scenes:Dictionary = {
+	Toppings.Type.SAUCE: load("res://grid_items/sauce_grid_item.tscn"),
+	Toppings.Type.CHEESE: load("res://grid_items/cheese_grid_item.tscn"),
+	Toppings.Type.SAUSAGE: load("res://grid_items/sausage_grid_item.tscn"),
+	Toppings.Type.PEPPERONI: load("res://grid_items/pepperoni_grid_item.tscn"),
+	Toppings.Type.GREEN_PEPPER: load("res://grid_items/green_pepper_grid_item.tscn"),
+	Toppings.Type.ONION: load("res://grid_items/onion_grid_item.tscn"),
+	Toppings.Type.OLIVE: load("res://grid_items/olive_grid_item.tscn"),
+	Toppings.Type.TOMATO: load("res://grid_items/tomato_grid_item.tscn"),
+}
+
+var topping_scene_paths:Dictionary = {}
 
 var selected_grid_cell:GridCell = null
 
 func _ready():
+	for type in topping_scenes.keys():
+		var scene = topping_scenes[type]
+		topping_scene_paths[scene.resource_path] = type
 	_update_grid_cells()
 
 
 func _on_grid_cell_pressed(grid_cell:GridCell):
+	if not active:
+		return
+
 	if grid_cell == selected_grid_cell:
 		return
 
@@ -39,6 +57,9 @@ func _on_grid_cell_pressed(grid_cell:GridCell):
 		_select_grid_cell(grid_cell)
 
 func _on_grid_cell_unpressed(grid_cell:GridCell):
+	if not active:
+		return
+
 	if grid_cell == selected_grid_cell:
 		return
 
@@ -69,14 +90,6 @@ func _update_grid_cells():
 			grid_cell.connect("grid_cell_pressed", self._on_grid_cell_pressed)
 			grid_cell.connect("grid_cell_unpressed", self._on_grid_cell_unpressed)
 		$GridCells.add_child(grid_cell)
-
-	if not Engine.is_editor_hint():
-		_get_grid_cell_from_index(1).put_grid_item(cheese_scene.instantiate())
-		_get_grid_cell_from_index(2).put_grid_item(cheese_scene.instantiate())
-		_get_grid_cell_from_index(3).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(5).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(6).put_grid_item(tomato_scene.instantiate())
-		_get_grid_cell_from_index(9).put_grid_item(cheese_scene.instantiate())
 
 func _get_coordinate_from_index(index:int) -> Vector2i:
 	var index_x = index % GRID_SIZE.x
@@ -137,3 +150,29 @@ func get_grid_items_for_row(row:int) -> Array[GridItem]:
 	for column in range(get_columns()):
 		result.append(_get_grid_item_from_coordinate(Vector2i(column, row)))
 	return result
+
+func set_grid_item_topping(index:int, type:Toppings.Type):
+	_get_grid_cell_from_index(index).put_grid_item(
+		topping_scenes[type].instantiate()
+	)
+
+func get_grid_item_topping(item:GridItem) -> Toppings.Type:
+	if item == null:
+		return Toppings.Type.NONE
+	return topping_scene_paths.get(item.scene_file_path, Toppings.Type.NONE)
+
+func get_grid_item_toppings_for_row(row:int) -> int:
+	var toppings:int = 0
+	for item in get_grid_items_for_row(row):
+		toppings |= get_grid_item_topping(item)
+	return toppings
+
+func get_grid_item_toppings_for_column(column:int) -> int:
+	var toppings:int = 0
+	for item in get_grid_items_for_row(column):
+		toppings |= get_grid_item_topping(item)
+	return toppings
+
+func clear_grid_cells():
+	for node in $GridCells.get_children():
+		node.clear_grid_items()

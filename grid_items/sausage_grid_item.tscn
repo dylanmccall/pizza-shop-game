@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfc5ysx3wvtdp"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_spq6e"]
+[ext_resource type="Texture2D" uid="uid://bhkcrx25qpmm5" path="res://art/toppings/sausage.pxo" id="2_4upig"]
+
+[node name="SausageGridItem" instance=ExtResource("1_spq6e")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_4upig")

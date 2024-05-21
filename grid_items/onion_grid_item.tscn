@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjha821dp5j35"]
+
+[ext_resource type="PackedScene" uid="uid://b41oo5cvoajty" path="res://grid_item.tscn" id="1_s02q7"]
+[ext_resource type="Texture2D" uid="uid://be6f8a68g1iv4" path="res://art/toppings/onion.pxo" id="2_pekg1"]
+
+[node name="OnionGridItem" instance=ExtResource("1_s02q7")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_pekg1")

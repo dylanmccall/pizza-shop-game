@@ -27,11 +27,11 @@ topping = 1
 
 [node name="Cheese" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("5_11r85")
-topping = 4
+topping = 2
 
 [node name="Sausage" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("6_ax114")
-topping = 2
+topping = 4
 
 [node name="Pepperoni" parent="Crust" instance=ExtResource("3_uegdw")]
 texture = ExtResource("7_eqfk3")

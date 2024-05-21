@@ -23,6 +23,10 @@ func put_grid_item(grid_item:GridItem):
 	$Container.add_child(grid_item)
 	grid_item.position = Vector2.ZERO
 
+func clear_grid_items():
+	for child in $Container.get_children():
+		child.queue_free()
+
 func move_grid_item(grid_item:GridItem, animate:bool = false):
 	grid_item.reparent($Container, true)
 	if animate:
