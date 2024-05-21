@@ -3,7 +3,8 @@ class_name Main
 extends Node
 
 
-var max_pizza_orders: int = 0
+@export var min_pizza_orders:int = 2
+var num_pizza_orders: int = min_pizza_orders
 var pizza_orders: Array[PizzaOrderIndicator] = []
 
 
@@ -12,12 +13,11 @@ func _refresh_pizza_orders():
 		$Grid.remove_child(order)
 		order.queue_free()
 
-	max_pizza_orders = $Grid.get_rows() # + $Grid.get_columns()
 	pizza_orders = []
-	pizza_orders.resize(max_pizza_orders)
+	pizza_orders.resize(num_pizza_orders)
 
 	var needed_toppings = []
-	for order_number in range(max_pizza_orders):
+	for order_number in range(num_pizza_orders):
 		var order = _add_pizza_order(order_number)
 		pizza_orders[order_number] = order
 		for type in Toppings.Type.values():
@@ -62,11 +62,23 @@ func _on_grid_grid_changed(_source: Grid):
 	pass
 
 
+func _start_round():
+	$UI.set_message("")
+	$Grid.clear_grid_cells()
+	_refresh_pizza_orders()
+	$Grid.active = true
+	$UI.start_countdown()
+
+
 func _update_status():
 	$Grid.active = false
 	var matched:bool = _check_pizza_orders()
 	if matched:
 		$UI.set_message("LOOKS GOOD, DUDE!")
+		await get_tree().create_timer(1).timeout
+		if num_pizza_orders < $Grid.get_rows():
+			num_pizza_orders += 1
+		_start_round()
 	else:
 		$UI.set_message("BRO, THAT'S NOT WHAT I ORDERED!")
 
@@ -80,8 +92,5 @@ func _on_ui_ready_pressed():
 
 
 func _on_ui_start_pressed():
-	$UI.set_message("")
-	$Grid.clear_grid_cells()
-	_refresh_pizza_orders()
-	$Grid.active = true
-	$UI.start_countdown()
+	num_pizza_orders = min_pizza_orders
+	_start_round()
